@@ -14,13 +14,15 @@ RUN apt-get update && apt-get install -y \
     sudo \
     zip \
     sqlite \
+    mysql-server \
     libjpeg62-turbo-dev \
     libpng12-dev \
  && docker-php-ext-configure gd \
     --with-freetype-dir=/usr \
     --with-jpeg-dir=/usr \
  && docker-php-ext-install -j$(nproc) \
-    gd 
+    gd \
+    pdo_mysql
 
 
 
@@ -69,7 +71,8 @@ ARG GIT_EMAIL=git_email
 RUN echo 'alias redis-cli="redis-cli -h redis"' >> ~/.bashrc \
  && . ~/.bashrc \
  && git config --global user.name "${GIT_NAME}" \
- && git config --global user.email "${GIT_EMAIL}"
+ && git config --global user.email "${GIT_EMAIL}" \
+ && echo 'alias mysql="mysql -h mysql"' >> ~/.bashrc
 
 USER root
 
@@ -82,6 +85,7 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
 	yarn \
  && yarn config set registry 'https://registry.npm.taobao.org' \
 ;fi
+
 
 USER www-data
 
