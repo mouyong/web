@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     sudo \
     zip \
     sqlite \
-    mysql-server \
+    mysql-client \
     libjpeg62-turbo-dev \
     libpng12-dev \
  && docker-php-ext-configure gd \
