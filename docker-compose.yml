@@ -18,9 +18,6 @@ services:
             - redis
         volumes:
             - ./ssh:/home/www-data/.ssh
-        extra_hosts:
-            # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
-            - "test.com:172.19.0.5"
         links:
             - redis
             - mysql
@@ -31,9 +28,6 @@ services:
         build: ./images/php-fpm
         volumes:
             - ./app/:/var/www/
-        extra_hosts:
-            # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
-            - "test.com:172.19.0.5"
 
 ### nginx
     nginx:
