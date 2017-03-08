@@ -40,8 +40,6 @@ services:
         image: nginx:1.11.10-alpine
         ports:
             - "80:80"
-        depends_on:
-            - php-fpm
         volumes_from:
             - php-fpm
         volumes:

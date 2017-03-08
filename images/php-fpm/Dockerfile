@@ -2,7 +2,7 @@ FROM php:7.1.2-fpm
 
 RUN sed -i 's/deb\.debian\.org/mirrors.aliyun.com/' /etc/apt/sources.list && sed -i 's/security\.debian\.org/mirrors.aliyun.com\/debian-security/' /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y \ 
+RUN apt-get update && apt-get install -y \
 	--no-install-recommends \
 	libfreetype6-dev \
     libjpeg62-turbo-dev \
@@ -22,5 +22,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY ./conf/php.ini /usr/local/etc/php/conf.d/
 COPY ./conf/opcache-recommended.ini /usr/local/etc/php/conf.d/
+
+RUN usermod -u 1000 www-data
 
 WORKDIR /var/www/
