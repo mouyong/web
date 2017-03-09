@@ -26,7 +26,7 @@ services:
         volumes:
             - ../:/var/www/
         extra_hosts:
-            - "aw.me:10.0.75.1"
+            - "as.me:172.19.0.1"
 
 ### nginx
     nginx:
