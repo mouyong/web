@@ -45,6 +45,7 @@ services:
         volumes:
             - ./logs/nginx/:/var/log/nginx/
             - ./images/nginx/sites:/etc/nginx/conf.d/
+            - ./images/nginx/nginx.conf:/etc/nginx/nginx.conf
         links:
             - php-fpm
 
