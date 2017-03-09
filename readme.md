@@ -14,8 +14,7 @@
 
 ```
 .
-|-- app 网站目录
-|	|-- index.php 首页
+|-- .. 网站目录
 |-- data 数据存储目录
 |	|-- mysql mysql 数据存储目录
 |	|-- redis redis 数据存储目录
