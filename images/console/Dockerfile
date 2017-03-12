@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -y \
 	software-properties-common \
 	apt-transport-https \
 	ca-certificates \
-	git \
 	curl \
     libfreetype6-dev \
     vim \
@@ -45,9 +44,7 @@ RUN wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL" \
  && rm redis.tar.gz \
  && make -C /usr/src/redis \
  && make -C /usr/src/redis install \
- && rm -r /usr/src/redis \
- && echo 'alias redis-cli="redis-cli -h redis"' >> ~/.bashrc \
- && . ~/.bashrc
+ && rm -r /usr/src/redis
 
 
 ARG USERPASS=www-data
@@ -65,16 +62,23 @@ RUN echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc \
  && composer global require laravel/installer
 
 
-ARG GIT_NAME=git_name
-ARG GIT_EMAIL=git_email
-
 RUN echo 'alias redis-cli="redis-cli -h redis"' >> ~/.bashrc \
- && . ~/.bashrc \
- && git config --global user.name "${GIT_NAME}" \
- && git config --global user.email "${GIT_EMAIL}" \
- && echo 'alias mysql="mysql -h mysql"' >> ~/.bashrc
+ && echo 'alias mysql="mysql -h mysql"' >> ~/.bashrc \
+ && . ~/.bashrc
 
 USER root
+
+ARG INSTALL_NODE=false
+ENV NODE_VERSION=6.10.0
+ENV NODE_DOWNLOAD_URL=https://nodejs.org/dist/v6.10.0/node-v${NODE_VERSION}-linux-x64.tar.xz
+RUN if [ ${INSTALL_NODE} = true ]; then \
+    mkdir /usr/local/node \
+ && wget -O node.tar.xz "$NODE_DOWNLOAD_URL" \
+ && tar -Jxf node.tar.xz -C /usr/src/node --strip-components=1 \
+ && rm node.tar.xz \
+ && echo 'export PATH="$PATH:/usr/local/node/bin"' >> ~/.bashrc \
+ && . ~/.bashrc \
+;fi
 
 ARG INSTALL_YARN=false
 RUN if [ ${INSTALL_YARN} = true ]; then \
