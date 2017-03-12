@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     sudo \
     zip \
+    xz-utils \
     sqlite \
     mysql-client \
     libjpeg62-turbo-dev \
@@ -35,50 +36,51 @@ ADD composer /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
 # redis
-ENV REDIS_VERSION 3.2.8
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-$REDIS_VERSION.tar.gz
+#ENV REDIS_VERSION 3.2.8
+#ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-$REDIS_VERSION.tar.gz
 
-RUN wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL" \
- && mkdir -p /usr/src/redis \
- && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
- && rm redis.tar.gz \
- && make -C /usr/src/redis \
- && make -C /usr/src/redis install \
- && rm -r /usr/src/redis
-
+#RUN wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL" \
+# && mkdir -p /usr/src/redis \
+# && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
+# && rm redis.tar.gz \
+# && make -C /usr/src/redis \
+# && make -C /usr/src/redis install \
+# && rm -r /usr/src/redis
+RUN apt-get install -y redis-tools
 
 ARG USERPASS=www-data
 
 RUN usermod -u 1000 -s /bin/bash -G sudo,www-data -d /home/www-data www-data \
  && mkdir /home/www-data \
  && chown -R www-data:www-data /home/www-data \
- && echo www-data:${USERPASS} | chpasswd
+ && echo www-data:${USERPASS} | chpasswd \
+ && echo 'export PATH="$PATH:/usr/local/node/bin:/usr/local/node/bin"' >> ~/.bashrc \
+ && echo 'alias redis-cli="redis-cli -h redis"' >> ~/.bashrc \
+ && echo 'alias mysql="mysql -h mysql"' >> ~/.bashrc \
+ && echo 'export PATH="$PATH:/usr/local/node/bin:/usr/local/node/bin"' >> ~/.bashrc \
+ && echo '\n#alias for cnpm\nalias cnpm="npm --registry=https://registry.npm.taobao.org --cache=$HOME/.npm/.cache/cnpm \
+  --disturl=https://npm.taobao.org/dist \
+  --userconfig=$HOME/.cnpmrc"' >> ~/.bashrc \
+ && . ~/.bashrc
+
+ADD node.tar.xz /usr/local
+RUN mv /usr/local/node-v6.10.0-linux-x64 /usr/local/node
 
 USER www-data
 
 RUN echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc \
  && . ~/.bashrc \
- && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
- && composer global require laravel/installer
-
+ && composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 RUN echo 'alias redis-cli="redis-cli -h redis"' >> ~/.bashrc \
  && echo 'alias mysql="mysql -h mysql"' >> ~/.bashrc \
+ && echo 'export PATH="$PATH:/usr/local/node/bin:/usr/local/node/bin"' >> ~/.bashrc \
+ && echo '\n#alias for cnpm\nalias cnpm="npm --registry=https://registry.npm.taobao.org --cache=$HOME/.npm/.cache/cnpm \
+  --disturl=https://npm.taobao.org/dist \
+  --userconfig=$HOME/.cnpmrc"' >> ~/.bashrc \
  && . ~/.bashrc
 
 USER root
-
-ARG INSTALL_NODE=false
-ENV NODE_VERSION=6.10.0
-ENV NODE_DOWNLOAD_URL=https://nodejs.org/dist/v6.10.0/node-v${NODE_VERSION}-linux-x64.tar.xz
-RUN if [ ${INSTALL_NODE} = true ]; then \
-    mkdir /usr/local/node \
- && wget -O node.tar.xz "$NODE_DOWNLOAD_URL" \
- && tar -Jxf node.tar.xz -C /usr/src/node --strip-components=1 \
- && rm node.tar.xz \
- && echo 'export PATH="$PATH:/usr/local/node/bin"' >> ~/.bashrc \
- && . ~/.bashrc \
-;fi
 
 ARG INSTALL_YARN=false
 RUN if [ ${INSTALL_YARN} = true ]; then \

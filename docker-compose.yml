@@ -8,7 +8,6 @@ services:
             args:
                 # console 容器 www-data用户密码
                 - USERPASS=123456
-                - INSTALL_NODE=true
                 - INSTALL_YARN=false
         volumes_from:
             - php-fpm

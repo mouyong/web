@@ -90,7 +90,7 @@ or
 
 ### 1. console
 
-`容器中已包含 git、composer、redis 等工具`
+`容器中已包含 node、npm(cnmp)、composer、redis 等工具`
 该容器普通用户默认密码为 `123456` ，您可以在 `docker-compose.yml` 文件的 `console` 容器中进行修改。
   
   管理项目的容器：
