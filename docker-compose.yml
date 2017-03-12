@@ -26,7 +26,7 @@ services:
         volumes:
             - ../:/var/www/
         extra_hosts:
-            - "as.me:172.19.0.1"
+            - "evas.itxdl.cn:172.19.0.1"
 
 ### nginx
     nginx:
