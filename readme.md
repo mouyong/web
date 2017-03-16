@@ -14,8 +14,7 @@
 
 ```
 .
-|-- app 网站目录
-|	|-- index.php 首页
+|-- .. 网站目录
 |-- data 数据存储目录
 |	|-- mysql mysql 数据存储目录
 |	|-- redis redis 数据存储目录
@@ -91,8 +90,8 @@ or
 
 ### 1. console
 
-`容器中已包含 git、composer、redis 等工具`
-该容器普通用户默认密码为 `root` ，您可以在 `docker-compose.yml` 文件的 `console` 容器中进行修改。
+`容器中已包含 node、npm(cnmp)、composer、redis 等工具`
+该容器普通用户默认密码为 `123456` ，您可以在 `docker-compose.yml` 文件的 `console` 容器中进行修改。
   
   管理项目的容器：
    1. 可在此容器中直接修改网站配置。网站配置在 `/etc/nginx/conf.d/` 目录下。
