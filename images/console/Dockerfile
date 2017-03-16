@@ -63,8 +63,10 @@ RUN usermod -u 1000 -s /bin/bash -G sudo,www-data -d /home/www-data www-data \
   --userconfig=$HOME/.cnpmrc"' >> ~/.bashrc \
  && . ~/.bashrc
 
-ADD node.tar.xz /usr/local
-RUN mv /usr/local/node-v6.10.0-linux-x64 /usr/local/node
+COPY node.tar.xz /usr/local
+RUN mkdir /usr/local/node \
+ && tar Jxf /usr/local/node.tar.xz -C /usr/local/node --strip-components=1 \
+ && rm /usr/local/node.tar.xz
 
 USER www-data
 
