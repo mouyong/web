@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
 	software-properties-common \
 	apt-transport-https \
 	ca-certificates \
+    git \
 	curl \
     libfreetype6-dev \
     vim \
