@@ -95,7 +95,6 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
  && yarn config set registry 'https://registry.npm.taobao.org' \
 ;fi
 
-
 USER www-data
 
 WORKDIR /var/www/
