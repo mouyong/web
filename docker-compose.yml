@@ -28,7 +28,7 @@ services:
             - ../:/var/www/
         extra_hosts:
             # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
-            - "dockerhost:172.19.0.1"
+            - "dockerhost:172.18.0.1"
 
 ### nginx
     nginx:

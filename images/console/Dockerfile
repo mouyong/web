@@ -95,6 +95,22 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
  && yarn config set registry 'https://registry.npm.taobao.org' \
 ;fi
 
+RUN echo "alias egrep='egrep --color=auto'" >> ~/.bashrc \
+ && echo "alias fgrep='fgrep --color=auto'" >> ~/.bashrc \
+ && echo "alias grep='grep --color=auto'" >> ~/.bashrc \
+ && echo "alias l='ls -CF'" >> ~/.bashrc \
+ && echo "alias la='ls -A'" >> ~/.bashrc \
+ && echo "alias ll='ls -alF'" >> ~/.bashrc \
+ && echo "alias ls='ls --color=auto'" >> ~/.bashrc 
+
 USER www-data
+
+RUN echo "alias egrep='egrep --color=auto'" >> ~/.bashrc \
+ && echo "alias fgrep='fgrep --color=auto'" >> ~/.bashrc \
+ && echo "alias grep='grep --color=auto'" >> ~/.bashrc \
+ && echo "alias l='ls -CF'" >> ~/.bashrc \
+ && echo "alias la='ls -A'" >> ~/.bashrc \
+ && echo "alias ll='ls -alF'" >> ~/.bashrc \
+ && echo "alias ls='ls --color=auto'" >> ~/.bashrc 
 
 WORKDIR /var/www/
