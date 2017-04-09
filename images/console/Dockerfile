@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     sudo \
     zip \
+    bzip2 \
     xz-utils \
     sqlite \
     mysql-client \
