@@ -3,6 +3,8 @@ version: "2"
 services:
 ### console
     console:
+        #ports:
+        #   - "8080:8080"
         build:
             context: ./images/console
             args:
@@ -32,14 +34,17 @@ services:
 
 ### nginx
     nginx:
-        image: nginx:1.11.10-alpine
+        build:
+            context: ./images/nginx
+            args:
+                - PHP_UPSTREAM=web_php-fpm_1
         ports:
             - "80:80"
         volumes_from:
             - php-fpm
         volumes:
             - ./logs/nginx/:/var/log/nginx/
-            - ./images/nginx/sites:/etc/nginx/conf.d/
+            - ./images/nginx/sites:/etc/nginx/sites-available/
             - ./images/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 ### mysql
