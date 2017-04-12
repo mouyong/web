@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libpng12-dev \
+    ntpdate \
  && rm -rf /var/lib/apt/lists/* \
  && docker-php-ext-configure gd \
     --with-freetype-dir=/usr \
@@ -26,3 +27,8 @@ COPY ./conf/opcache-recommended.ini /usr/local/etc/php/conf.d/
 RUN usermod -u 1000 www-data
 
 WORKDIR /var/www/
+
+RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+ && echo "Asia/Shanghai" > /etc/timezone \
+ && dpkg-reconfigure -f noninteractive tzdata
+
