@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     libmcrypt-dev \
     libpng12-dev \
     ntpdate \
+    cron \
  && rm -rf /var/lib/apt/lists/* \
  && docker-php-ext-configure gd \
     --with-freetype-dir=/usr \
