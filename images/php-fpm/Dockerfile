@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libpng12-dev \
     ntpdate \
     cron \
+    vim \
  && rm -rf /var/lib/apt/lists/* \
  && docker-php-ext-configure gd \
     --with-freetype-dir=/usr \
