@@ -58,7 +58,8 @@ USER www-data
 
 RUN echo 'PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc \
  && . ~/.bashrc \
- && composer config -g repo.packagist composer https://packagist.phpcomposer.com
+# && composer config -g repo.packagist composer https://packagist.phpcomposer.com
+ && composer config -g repo.packagist composer https://packagist.laravel-china.org
 
 RUN echo 'alias redis-cli="redis-cli -h redis"' >> ~/.bashrc \
  && echo 'alias mysql="mysql -h mysql"' >> ~/.bashrc \
